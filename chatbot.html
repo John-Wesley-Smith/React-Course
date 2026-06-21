@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Chatbot
+
+    </title>
+  </head>
+  <body>
+    <div class="js-container"></div>
+
+    <script src="https://unpkg.com/supersimpledev/react.js"></script>
+    <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
+    <!-- The above two lines load the react external library
+      Here we load from the supersimpledev. Because to control the version of React . To avoid issuse-->
+
+
+    <script src="https://unpkg.com/supersimpledev/babel.js"></script>
+    <!-- External library called babel-->
+    <script type="text/babel">
+
+      function ChatInput() { // ChatInput is a component
+        return (
+          <>
+            <input 
+              placeholder="Send a message to ChatBot" 
+              size="30" 
+            /> 
+            <button>Send</button>
+          </>
+        )
+      }
+
+      function ChatMessage(props) {
+        // const message = props.message;
+        const {message} = props;// Shortcut for above
+        const {sender} = props;
+        // const {message, sender} = props; // This is also allowed
+
+        /*
+        if (sender === 'robot') {
+            return(
+            <div>
+              <img src="images/robot.png" width="50"/>
+              {message}
+            </div>
+          );
+        }
+        */ // The below is the shortcut of this code
+       
+        return(
+          <div>
+            {sender === 'robot' && (
+              <img src="images/robot.png" width="50"/>
+            )}
+            {message}
+            {sender === 'user' && (
+              <img src="images/user.png" width="50"/>
+            )}
+          </div>
+        );
+      }
+
+      // Usa a component to create the app
+      function App() {
+        return (
+          <>
+            <ChatInput />
+            <ChatMessage 
+              message="Hello Chatbot" 
+              sender="user"/>
+            <ChatMessage 
+              message="Hello! How can I help you?" 
+              sender="robot"/>
+            <ChatMessage 
+              message="can you get me todays date?" 
+              sender="user"/>
+            <ChatMessage 
+              message="Today is June 21" 
+              sender="robot"/>
+          </>
+        )
+      }
+      
+
+      const container = document.querySelector('.js-container');
+      ReactDOM.createRoot(container).render(<App/>);
+      // The above two code Helps to sets up React
+    </script>
+  </body>
+</html>
+
+<!--
+  Components:
+    - Component is a piece of the website
+    - To create a component use the function.
+  
+  When Building websites:
+    - It's better to split up the website into pieces.
+    - So we can work on a small piece of the website at a time
+  
+  Note:
+    - The component name must start with capital letter.
+    - This is called PascalCase (each word starts with a capital letter: (ex) CharInput)
+  
+  - In JSX, input must have closing tag
+    - *All elements need a closing tag.
+    - <input /> // shortcut for <input></input> if Nothing inside in input element
+    - The above is called self-closing element
+  
+  - {ChatInput()} This helps the run the function
+  - {ChatInput()} and <ChatInput></ChatInput> both do the same thing
+  - <ChatInput></ChatInput> this have a great advantage. It look like html element. we can thing like, we're creating our own HTML element
+  - By using this we can create our own HTML element
+  - The self-closing element shortcut is <ChatInput />
+
+  Fragment:
+    - React have a another way to group a element called Fragment(<></>)
+    - Group elements together, without creating an extra <div>
+    - By using fragment we can remove the word div. And have simply ( <> opening tag and </> closing tag)
+    - This helps to avoid extra div.
+
+  size attribute:
+    - size attribute defines how may character can fi in the <input> tag
+    - character = a letter(abc), number(123), or symbol(!@#).
+
+  Note: <div> is a block element( take up an entire line by itself)
+        In React, we still use <div> for layout purposes
+
+  Props:
+    - Every component get one parameter called props
+    - The props parameter is an object and it contains all the attributes that we give to the component.
+    - props make our component reusable
+    - props is the short of properties
+    - To access the attribute : 
+      - syntax : props.attribute_name
+      - ex : props.message;
+      - const {message} = props; // This is the shorcut of (const message = props.message;) 
+      - This shortcut is called Destructing
+
+  Note: 
+      function ChatMessage(props) {
+        const {message} = props; // Shortcut 
+        const {sender} = props;
+        // const {message, sender} = props; // This is also allowed
+
+        return(
+          <div>
+            {message}
+            <img src="images/user.png" width="50"/>
+          </div>
+        );
+      }
+
+    // We can also use like the parameter below
+
+      function ChatMessage({ message, sender }) {
+
+        return(
+          <div>
+            {message}
+            <img src="images/user.png" width="50"/>
+          </div>
+        );
+      }
+
+  if Statement in JSX (Gaurd Operator):
+    - here we can't use the if statement in JSX, But we can use the Gaurd Operator(&&)
+
+    ex: const res = value1 && value2;
+      - if value1 is true, the result will be value2.
+      - This works just like an if-statement
+    ex: {sender === 'robot' && <img src="images/robot.png" width="50"/>}
+      - if sender is a 'robot' then the img will be showed otherwise not 
+    
+  Best Practice:
+    Use a component (App) to create the website
+    - React lets us work on a small piece of the website at a time
+        
+    
+-->
