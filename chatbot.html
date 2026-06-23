@@ -13,6 +13,9 @@
     <!-- The above two lines load the react external library
       Here we load from the supersimpledev. Because to control the version of React . To avoid issuse-->
 
+    <script src="https://unpkg.com/supersimpledev/chatbot.js"></script>
+    <!-- Add the external library for chatbot-->
+
 
     <script src="https://unpkg.com/supersimpledev/babel.js"></script>
     <!-- External library called babel-->
@@ -20,21 +23,35 @@
 
       function ChatInput({chatMessages, setChatMessages}) { // ChatInput is a component
 
-        const [InputText, setInputText] = React.useState('');
+        const [inputText, setInputText] = React.useState('');
 
         function saveInputText(event) {
           setInputText(event.target.value);
         }
 
         function sendMessage() {
-          setChatMessages([
+          const newChatMessages = [
             ...chatMessages, // Spread Operator(...) = takes the values in an array, and copies them into a new array.
             {
-              message: InputText,
+              message: inputText,
               sender: 'user',
               id: crypto.randomUUID()
             }
+          ]
+
+          setChatMessages(newChatMessages);
+          
+          const response = Chatbot.getResponse(inputText)
+          setChatMessages([
+            ...newChatMessages, // Spread Operator(...) = takes the values in an array, and copies them into a new array.
+            {
+              message: response,
+              sender: 'robot',
+              id: crypto.randomUUID()
+            }
           ]);
+          
+          
 
           setInputText('');
         }
@@ -45,7 +62,7 @@
               placeholder="Send a message to ChatBot" 
               size="30" 
               onChange={saveInputText}
-              value = {InputText} // Controlled Input: used to make the input box empty after sending the message
+              value = {inputText} // Controlled Input: used to make the input box empty after sending the message
             /> 
             <button
               onClick={sendMessage}
