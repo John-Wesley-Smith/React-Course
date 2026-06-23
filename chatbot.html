@@ -18,14 +18,38 @@
     <!-- External library called babel-->
     <script type="text/babel">
 
-      function ChatInput() { // ChatInput is a component
+      function ChatInput({chatMessages, setChatMessages}) { // ChatInput is a component
+
+        const [InputText, setInputText] = React.useState('');
+
+        function saveInputText(event) {
+          setInputText(event.target.value);
+        }
+
+        function sendMessage() {
+          setChatMessages([
+            ...chatMessages, // Spread Operator(...) = takes the values in an array, and copies them into a new array.
+            {
+              message: InputText,
+              sender: 'user',
+              id: crypto.randomUUID()
+            }
+          ]);
+
+          setInputText('');
+        }
+
         return (
           <>
             <input 
               placeholder="Send a message to ChatBot" 
               size="30" 
+              onChange={saveInputText}
+              value = {InputText} // Controlled Input: used to make the input box empty after sending the message
             /> 
-            <button>Send</button>
+            <button
+              onClick={sendMessage}
+            >Send</button>
           </>
         )
       }
@@ -60,25 +84,61 @@
         );
       }
 
+      function ChatMessages({chatMessages}) {
+
+        return (
+          <>            
+
+            {chatMessages.map((chatMessage) => {
+              return (
+                <ChatMessage
+                  message={chatMessage.message}
+                  sender={chatMessage.sender}
+                  key={chatMessage.id}
+                />
+              );
+            })}
+          </>
+        );
+      }
+
       // Usa a component to create the app
       function App() {
+
+        const [chatMessages, setChatMessages] =  React.useState( [{
+          message : 'Hello Chatbot',
+          sender: 'user',
+          id: 'id1'
+        },{
+          message: '"Hello! How can I help you?',
+          sender: 'robot',
+          id: 'id2'
+        },{
+          message : 'can you get me todays date?',
+          sender: 'user',
+          id: 'id3'
+        },{
+          message: 'Today is June 21',
+          sender: 'robot',
+          id: 'id4'
+        }]);
+        // if we use the 'const array' instead of 'const {chatMessages, setChatMessages}'. we can use the below code. In the code we also use shortcut(Array Destructuring)
+        // const [chatMessages, setChatMessages] = array; // This is the shortcut of below two lines and called Array destructing. Note: order matters
+        // const chatMessages = array[0]; // The first value(array[0]) give the current data of ChatMessage. 
+        // const setChatMessages = array[1]; // The second value(array[1]) is the function that updates the data
+        
+
         return (
           <>
-            <ChatInput />
-            <ChatMessage 
-              message="Hello Chatbot" 
-              sender="user"/>
-            <ChatMessage 
-              message="Hello! How can I help you?" 
-              sender="robot"/>
-            <ChatMessage 
-              message="can you get me todays date?" 
-              sender="user"/>
-            <ChatMessage 
-              message="Today is June 21" 
-              sender="robot"/>
+            <ChatInput 
+              chatMessages = {chatMessages}
+              setChatMessages = {setChatMessages}
+            />
+            <ChatMessages 
+              chatMessages = {chatMessages} // This is the naming convention
+            />
           </>
-        )
+        );
       }
       
 
@@ -175,6 +235,78 @@
   Best Practice:
     Use a component (App) to create the website
     - React lets us work on a small piece of the website at a time
-        
+  
+  Object = groups related values together
+
+  map() function lets us go through each value of an array and convert it into a new value
+
+  Key prop:
+      - In react, if we insert a array of components, we need to give each component a prop called key.
+      - The key helps react track changes in the array. So we should give each component a key
+      - key should be unique
+
+  Event Handles
+    - Event handles runs a function when we interact with the website
+    - onClick is a Event and sendMessage is the Event Handler
+    - event prop must use camelCase(ex: onClick)
+    - here we should not use the brackets to run the function. ex: {sendMessage}
+
+  - crypto.randomUUID() - helps to generate a unique Id string every we run the code
+  
+  State:
+      - State is the data that is connected to the HTML.
+      - When we update this data, it will update the HTML
+      - We use state to save data that changes over time.
+        ex: if convert the chat message into state, when we update chat messages, it will update the HTML
+      - We can done using React.useState()
+      ex: const array = React.useState()
+          - We get to values from the array
+          - The first value(array[0]) give the current data of ChatMessage.
+          - The second value(array[1]) is the function that updates the data. This is also known as updater function
+          - In React, we should not update the data directly using .push() , we always use the array[1] function to update the data.
+          - If we update the data directly React will not update the HTML. If we use the function(array[1]) to update teh data, React will update the HTML
+          - The way that this updator function works is it replace the entire chat Messages array with a new array
+
+  Note:
+      - In React, we should not modifu the data directly.
+      - We should always create a copy, and then modify the copy.
+      - (This helps React be more efficient).
+  
+  Spread Operator(...)
+    - Takes the values in an array, and copies them into a new array.
+    - ex: [...chatMessages]
+  
+  React Best Practice:
+    - Do not use the DOM manually ( React is managing the website)
+  
+  onChange event:
+    - Runs a function when we change the text inside an <input> tag
+  
+  event.target = gives us the element that we're typing in
+
+  Visualize the components in our App ( component tree):
+          <APP>
+    ________|___________
+    |                   |
+    |                   |
+    <CharInput>     <ChatMessages>
+                        |
+                        |
+                    {chatMessages, setChatMessages}
+  
+    Here {chatMessages, ChatMessage} locate under teh <ChatMessages> we have to uplift the state up to the <App> components
+    
+    Lifting the State Up = share state between multiple components
+
+  - Using {} we can save any type of value inside a prop
+  - chatMessages = {chatMessages} // This is the naming convention
+  
+    
+
+  
+
+
+
+
     
 -->
