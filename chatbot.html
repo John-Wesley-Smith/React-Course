@@ -180,13 +180,19 @@
 
       function ChatMessages({chatMessages}) {
 
+        const chatMessagesRef = React.useRef(null);
+
         React.useEffect(() => {
-          console.log('update')
+          const containerElem = chatMessagesRef.current;
+          if(containerElem){
+            containerElem.scrollTop = containerElem.scrollHeight;
+          }
         }, [chatMessages]);
 
         return (
-          <div className="chat-messages-container">            
-
+          <div className="chat-messages-container"
+          ref={chatMessagesRef}>            
+          
             {chatMessages.map((chatMessage) => {
               return (
                 <ChatMessage
@@ -448,7 +454,15 @@
       ex: React.useEffect(() => {
           console.log('update')
         }, [chatMessages]);
-        here [chatMessages] run this funciton every time chatMessages changes.
+        - here [chatMessages] run this funciton every time chatMessages changes.
+        - This is an dependency Array = control when useEffect runs
+        Best Pratice: give useEffect a dependency array to avoid ruuning too often
+    
+    useRef():
+      - To get the html element in React use the Hooks, useRef()
+      - useRef() automatically save an HTML element from the component.
+      - It create a ref. a ref is an container with special React features
+        
 
     
 
