@@ -8,3 +8,11 @@ createRoot(document.getElementById('root')).render(
     <App />
   </StrictMode>,
 )
+
+/*
+  This code setup the React
+  - To calls createRoot, gives the container and render App component to the website
+
+  <StrictMode>
+    - gives us some additional checks and warnings when developing our app
+*/
