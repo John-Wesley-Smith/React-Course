@@ -462,6 +462,66 @@
       - To get the html element in React use the Hooks, useRef()
       - useRef() automatically save an HTML element from the component.
       - It create a ref. a ref is an container with special React features
+
+  Terminal Commands:
+    - To make new directory in terminal used the command : 
+        mkdir <folder_name>
+    - To print the directory(find the current directory): 
+        pwd (print working directory)
+    - To find all the files and folders in the current folder:
+        ls
+    - To change directory use or move inside a file:
+        cd <folder_name or file_name>
+    - To move out of the folder or file:
+        cd ..
+    - node command ( lets us run JavaScript code outside of a browser, and inside the terminal)
+        node
+    - npm command
+      - node package manager
+      - package = external library
+      - npm lets us install external libraries or packages into our project
+      - npm contains millions of packages that we can download and use
+        Some packages also add a command to our command line.
+          ex: package: create-Vite add a command, react-course> create-vite
+              react-course> create-vite = helps us set up a new React project
+        To use react-course> create-vite
+          1. Install the create-vite package.
+          2. Run create-vite in the command line.
+          There is a shortcut of the above two lines
+            npx create-vite 
+            (here x means execute)
+          @ = use a specific version of create-vite
+          ex: npx create-vite@6.5.0
+            - After entering this, it ask the project name(ex: chatbot-project).
+            - Then ask to select the framework and tools to work
+            - Finally the create vite, create a empty React project
+            - Here in the chat-project empty project, there will be a .js file. This file stores a list of all the packages need for this project
+            - Then enter npm install. This download all the required files.
+            - Then enter, npm run dev (This start up our new React Website)
+            - we can view the website by opening the local url link
+            - This helps to create a proper react setup using npm, and vite 
+      
+      Folder and files in chat-project:
+        - node_modules -> containes the files and folder that npm install all the packages
+        - src(source) -> This contains all the code for the website
+          - asset folder contains the images 
+        - public foler -> contains files that should be avaiable to the public
+        - .gitignore -> it is used by the tool git(used to track changes in the code)
+        - eslint.config.js -> it is used by the tool eslint( highlights(find) problems in our JavaScript code). This file contains the rules what to check
+        - index.html -> it contains all the html code for the react project
+        - package-lock.json -> contains a list of packages that needs to install to run the project. It saves the version number of all the packages we installed. npm automatically updates package-lock.json
+        - package.json -> contains all the packages that are need in our project. npm automatically update it
+        - README.md -> This gives more information about the project
+        - vite.config.js -> it configures Vite. 
+          - its is the tool we used to setup this project.
+          - Vite also helps us "build" the website.
+          - Vite also creates a server.(A server puts our website at a URL)
+          - Vite Server is a replacement for Live Server.
+
+        Most all the files are configuration files. The only files we focus on and change are index.html and the files in the src
+
+
+
         
 
     
