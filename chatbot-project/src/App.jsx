@@ -1,5 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { Chatbot } from 'supersimpledev'
+import RobotProfileImage from './assets/robot.png'
+import UserProfileImage from './assets/user.png'
 import './App.css'
 
 function ChatInput({ chatMessages, setChatMessages }) {
@@ -74,11 +76,11 @@ function ChatMessage(props) {
       className={sender === "user" ? "chat-message-user" : "chat-message-robot"}
     >
       {sender === "robot" && (
-        <img src="images/robot.png" className="chat-message-profile" />
+        <img src={RobotProfileImage} className="chat-message-profile" />
       )}
       <div className="chat-message-text">{message}</div>
       {sender === "user" && (
-        <img src="images/user.png" className="chat-message-profile" />
+        <img src={UserProfileImage} className="chat-message-profile" />
       )}
     </div>
   );
@@ -165,4 +167,18 @@ export default App
   To run the project:( do in the terminal with the pwd chatbot-project)
     npm run dev
     - This give the link for the website
+  
+  Default export:
+    import RobotProfileImage from './assets/robot.png'
+    - here vite gives the file path to the image name(RobotProfileImage)
+  
+  Advantage of this setup:
+    - we can separate our code into different files
+
+  Best practice:
+    - separate each component into its own file
+
+
+
+    
 */
