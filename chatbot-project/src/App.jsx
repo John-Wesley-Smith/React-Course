@@ -1,115 +1,7 @@
-import { useState, useRef, useEffect } from 'react'
-import { Chatbot } from 'supersimpledev'
-import RobotProfileImage from './assets/robot.png'
-import UserProfileImage from './assets/user.png'
+import { useState } from 'react'
+import { ChatInput } from './components/ChatInput'
 import './App.css'
-
-function ChatInput({ chatMessages, setChatMessages }) {
-  // ChatInput is a component
-
-  const [inputText, setInputText] = useState("");
-
-  function saveInputText(event) {
-    setInputText(event.target.value);
-  }
-
-  function sendMessage() {
-    const newChatMessages = [
-      ...chatMessages, // Spread Operator(...) = takes the values in an array, and copies them into a new array.
-      {
-        message: inputText,
-        sender: "user",
-        id: crypto.randomUUID(),
-      },
-    ];
-
-    setChatMessages(newChatMessages);
-
-    const response = Chatbot.getResponse(inputText);
-    setChatMessages([
-      ...newChatMessages, // Spread Operator(...) = takes the values in an array, and copies them into a new array.
-      {
-        message: response,
-        sender: "robot",
-        id: crypto.randomUUID(),
-      },
-    ]);
-
-    setInputText("");
-  }
-
-  return (
-    <div className="chat-input-container">
-      <input
-        placeholder="Send a message to ChatBot"
-        size="30"
-        onChange={saveInputText}
-        value={inputText} // Controlled Input: used to make the input box empty after sending the message
-        className="chat-input"
-      />
-      <button onClick={sendMessage} className="send-button">
-        Send
-      </button>
-    </div>
-  );
-}
-
-function ChatMessage(props) {
-  // const message = props.message;
-  const { message } = props; // Shortcut for above
-  const { sender } = props;
-  // const {message, sender} = props; // This is also allowed
-
-  /*
-        if (sender === 'robot') {
-            return(
-            <div>
-              <img src="images/robot.png" width="50"/>
-              {message}
-            </div>
-          );
-        }
-        */ // The below is the shortcut of this code
-
-  return (
-    <div
-      className={sender === "user" ? "chat-message-user" : "chat-message-robot"}
-    >
-      {sender === "robot" && (
-        <img src={RobotProfileImage} className="chat-message-profile" />
-      )}
-      <div className="chat-message-text">{message}</div>
-      {sender === "user" && (
-        <img src={UserProfileImage} className="chat-message-profile" />
-      )}
-    </div>
-  );
-}
-
-function ChatMessages({ chatMessages }) {
-  const chatMessagesRef = useRef(null);
-
-  useEffect(() => {
-    const containerElem = chatMessagesRef.current;
-    if (containerElem) {
-      containerElem.scrollTop = containerElem.scrollHeight;
-    }
-  }, [chatMessages]);
-
-  return (
-    <div className="chat-messages-container" ref={chatMessagesRef}>
-      {chatMessages.map((chatMessage) => {
-        return (
-          <ChatMessage
-            message={chatMessage.message}
-            sender={chatMessage.sender}
-            key={chatMessage.id}
-          />
-        );
-      })}
-    </div>
-  );
-}
+import ChatMessages from './components/ChatMessages'
 
 function App() {
   const [chatMessages, setChatMessages] = useState([
@@ -178,6 +70,25 @@ export default App
   Best practice:
     - separate each component into its own file
 
+  Note:
+    './components/ChatInput' here Vite add .js or .jsx automatically. So no need to mention
+
+  Order of the import Files(recommended order):
+    - first add packages
+    - second java script files
+    - then other types of files
+
+  Default Export:
+    import ChatMessages from './components/ChatMessages'
+      - This is the way to import default export
+  
+  Named Export: (use parathesis)
+    import { useState } from 'react'
+
+  Note:
+    - We usually save the App.jsx file outside of the component folder.
+    - Because app represent the entire application. It is the outermost component
+    - here we separated each component into its own file. This makes our code to easier to work with. because each file focuses on one component
 
 
     
